@@ -23,16 +23,23 @@ public class Posts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private Integer boardId;
+
     private String author;
 
     private String IPAddress;
 
+    private Long viewCount;
+
     @Builder
-    public Posts(String title, String content, String author, String IPAddress) {
+    public Posts(Integer boardId, String title, String content, String author, String IPAddress) {
+        this.boardId = boardId;
         this.title = title;
         this.content = content;
         this.author = author;
         this.IPAddress = IPAddress;
+        this.viewCount = 0L;
     }
 
     public void update(String title, String content) {

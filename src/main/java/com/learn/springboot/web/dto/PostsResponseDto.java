@@ -3,19 +3,23 @@ package com.learn.springboot.web.dto;
 import com.learn.springboot.domain.posts.Posts;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class PostsResponseDto {
     private Long id;
     private String title;
     private String content;
     private String author;
-    private String IPAddress;
+    private Long viewCount;
+    private LocalDateTime modifiedDate;
 
     public PostsResponseDto(Posts entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.author = entity.getAuthor();
-        this.IPAddress = entity.getIPAddress();
+        this.viewCount = entity.getViewCount();
+        this.modifiedDate = entity.getModifiedDate();
     }
 }
