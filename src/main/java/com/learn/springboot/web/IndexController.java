@@ -3,16 +3,12 @@ import com.learn.springboot.config.auth.LoginUser;
 import com.learn.springboot.config.auth.dto.SessionUser;
 import com.learn.springboot.service.posts.PostsService;
 import com.learn.springboot.web.dto.PostsResponseDto;
-import com.learn.springboot.config.auth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
@@ -22,8 +18,6 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
-        model.addAttribute("posts", postsService.findAllDesc());
-
         if(user != null){
             model.addAttribute("loginUserName", user.getName());
         }
@@ -41,6 +35,22 @@ public class IndexController {
         model.addAttribute("post", dto);
 
         return "posts-update";
+    }
+
+    @GetMapping("/notice")
+    public String notice(Model model, @LoginUser SessionUser user){
+        model.addAttribute("posts", postsService.findBoardDesc("notice"));
+        model.addAttribute("boardName", "notice");
+
+        return "board";
+    }
+
+    @GetMapping("/board")
+    public String board(Model model, @LoginUser SessionUser user){
+        model.addAttribute("posts", postsService.findBoardDesc("free"));
+        model.addAttribute("boardName", "free");
+
+        return "board";
     }
 
 }

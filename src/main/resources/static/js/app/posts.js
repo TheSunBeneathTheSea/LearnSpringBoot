@@ -15,7 +15,8 @@ var main = {
         var data = {
             title: $('#title').val(),
             author: $('#author').val(),
-            content: $('#content').val()
+            content: $('#content').val(),
+            boardName: $('#boardName').val()
         };
 
         $.ajax({
@@ -26,7 +27,7 @@ var main = {
             data: JSON.stringify(data)
         }).done(function(){
             alert('글이 등록되었습니다.');
-            window.location.href = '/';
+            window.location.href = 'javascript:history.back();';
         }).fail(function (err){
             alert(JSON.stringify(err));
         });
@@ -47,7 +48,7 @@ var main = {
             data: JSON.stringify(data)
         }).done(function(){
             alert('글이 수정되었습니다.');
-            window.location.href = '/';
+            window.location.href = 'javascript:history.back();';
         }).fail(function (error){
             alert(JSON.stringify(error));
         });
@@ -62,7 +63,7 @@ var main = {
             contentType:'application/json; charset=utf-8',
         }).done(function(){
             alert('글이 삭제되었습니다.');
-            window.location.href = '/';
+            window.location.href = 'javascript:history.back();';
         }).fail(function(error) {
             alert(JSON.stringify(error));
         });

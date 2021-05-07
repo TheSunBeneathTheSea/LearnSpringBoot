@@ -49,4 +49,9 @@ public class PostsService {
     public List<PostsListResponseDto> findAllDesc(){
         return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findBoardDesc(String boardName){
+        return postsRepository.findBoardDesc(boardName).stream().map(PostsListResponseDto::new).collect(Collectors.toList());
+    }
 }

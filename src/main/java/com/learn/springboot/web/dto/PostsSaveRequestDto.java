@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostsSaveRequestDto {
-    private Integer boardId;
+    private String boardName;
     private String title;
     private String content;
     private String author;
@@ -16,8 +16,8 @@ public class PostsSaveRequestDto {
     private Long viewCount;
 
     @Builder
-    public PostsSaveRequestDto(Integer boardId, String title, String content, String author, String IPAddress, Long viewCount) {
-        this.boardId = boardId;
+    public PostsSaveRequestDto(String boardName, String title, String content, String author, String IPAddress, Long viewCount) {
+        this.boardName = boardName;
         this.title = title;
         this.content = content;
         this.author = author;
@@ -27,7 +27,7 @@ public class PostsSaveRequestDto {
 
     public Posts toEntity() {
         return Posts.builder()
-                .boardId(boardId)
+                .boardName(boardName)
                 .title(title)
                 .content(content)
                 .author(author)

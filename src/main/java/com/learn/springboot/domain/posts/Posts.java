@@ -24,7 +24,7 @@ public class Posts extends BaseTimeEntity {
     private String content;
 
     @Column(nullable = false)
-    private Integer boardId;
+    private String boardName;
 
     private String author;
 
@@ -33,8 +33,8 @@ public class Posts extends BaseTimeEntity {
     private Long viewCount;
 
     @Builder
-    public Posts(Integer boardId, String title, String content, String author, String IPAddress) {
-        this.boardId = boardId;
+    public Posts(String boardName, String title, String content, String author, String IPAddress) {
+        this.boardName = boardName;
         this.title = title;
         this.content = content;
         this.author = author;
