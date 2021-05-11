@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public class PostsListResponseDto {
     private String boardName;
     private Long id;
+    private Long no;
     private String title;
     private String author;
     private Long viewCount;
@@ -15,6 +16,7 @@ public class PostsListResponseDto {
     public PostsListResponseDto(Posts entity) {
         this.boardName = entity.getBoardName();
         this.id = entity.getId();
+        this.no = entity.getNo();
         this.title = entity.getTitle();
         this.author = entity.getAuthor();
         this.viewCount = entity.getViewCount();

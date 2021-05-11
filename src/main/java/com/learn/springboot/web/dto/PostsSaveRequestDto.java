@@ -4,11 +4,14 @@ import com.learn.springboot.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
 public class PostsSaveRequestDto {
     private String boardName;
+    @Setter
+    private Long no;
     private String title;
     private String content;
     private String author;
@@ -16,8 +19,9 @@ public class PostsSaveRequestDto {
     private Long viewCount;
 
     @Builder
-    public PostsSaveRequestDto(String boardName, String title, String content, String author, String IPAddress, Long viewCount) {
+    public PostsSaveRequestDto(String boardName, String title, String content, String author, String IPAddress, Long viewCount, BoardsDto boardsDto) {
         this.boardName = boardName;
+        this.no = boardsDto.getPostsCount();
         this.title = title;
         this.content = content;
         this.author = author;
@@ -28,6 +32,7 @@ public class PostsSaveRequestDto {
     public Posts toEntity() {
         return Posts.builder()
                 .boardName(boardName)
+                .no(no)
                 .title(title)
                 .content(content)
                 .author(author)

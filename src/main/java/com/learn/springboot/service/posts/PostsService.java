@@ -1,11 +1,10 @@
 package com.learn.springboot.service.posts;
 
+import com.learn.springboot.domain.posts.Boards;
+import com.learn.springboot.domain.posts.BoardsRepository;
 import com.learn.springboot.domain.posts.Posts;
 import com.learn.springboot.domain.posts.PostsRepository;
-import com.learn.springboot.web.dto.PostsListResponseDto;
-import com.learn.springboot.web.dto.PostsResponseDto;
-import com.learn.springboot.web.dto.PostsSaveRequestDto;
-import com.learn.springboot.web.dto.PostsUpdateRequestDto;
+import com.learn.springboot.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +16,19 @@ import java.util.stream.Collectors;
 @Service
 public class PostsService {
     private final PostsRepository postsRepository;
+    private final BoardsRepository boardsRepository;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
+        //post 저장할 때 post의 boardname 필드값이 boards 테이블에 있는지 확인, 없으면 추가 있으면 count++
+        if(boardsRepository.findBoardDesc(requestDto.getBoardName()).isEmpty()){
+            boardsRepository.save(new Boards(requestDto.getBoardName(), 1L));
+            requestDto.setNo(1L);
+        }else{
+            Boards boards = boardsRepository.findById(requestDto.getBoardName()).orElseThrow(() -> new IllegalArgumentException("Cannot find board name=" + requestDto.getBoardName()));
+            boards.countUpdate();
+            requestDto.setNo(boards.getPostsCount());
+        }
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
