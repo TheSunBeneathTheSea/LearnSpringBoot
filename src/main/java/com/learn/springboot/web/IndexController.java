@@ -29,6 +29,14 @@ public class IndexController {
         return "posts-save";
     }
 
+    @GetMapping("/posts/view/{id}")
+    public String postsView(@PathVariable Long id, Model model){
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("post", dto);
+
+        return "posts-view";
+    }
+
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model){
         PostsResponseDto dto = postsService.findById(id);
@@ -45,7 +53,7 @@ public class IndexController {
         return "board";
     }
 
-    @GetMapping("/board")
+    @GetMapping("/free")
     public String board(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findBoardDesc("free"));
         model.addAttribute("boardName", "free");

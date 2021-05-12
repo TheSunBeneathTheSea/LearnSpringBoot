@@ -2,20 +2,20 @@
 
 <div class="container">
     <table class="table table-horizontal table-bordered">
-        <thead class="thead-strong">
+        <thead class="thead-strong text-center">
         <tr>
-            <th>게시글번호</th>
+            <th width="70">글번호</th>
             <th>제목</th>
-            <th>작성자</th>
-            <th>조회수</th>
-            <th>최종수정일</th>
+            <th width="150">작성자</th>
+            <th width="70">조회수</th>
+            <th width="150">최종수정일</th>
         </tr>
         </thead>
-        <tbody id="tbody">
+        <tbody id="tbody" class="text-center">
         {{#posts}}
             <tr>
                 <td>{{no}}</td>
-                <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                <td class="text-left"><a href="/posts/view/{{id}}">{{title}}</a></td>
                 <td>{{author}}</td>
                 <td>{{viewCount}}</td>
                 <td>{{modifiedDate}}</td>

@@ -1,0 +1,43 @@
+{{>layout/header}}
+
+<div class="container" id="article">
+    {{#post}}
+        <div class="row" id="posts-info">
+            <div class="col-md-12">
+                <a href="/{{boardName}}">{{boardName}}</a>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>{{title}}</h2>
+                    </div>
+                    <br>
+                </div>
+                <div id="meta-info">
+                    <p>작성자 : {{author}}     조회수 : {{viewCount}}     최종수정일 : {{modifiedDate}}    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="posts">
+            <div class="col-md-12">
+                {{content}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="float-right">
+                <a href="/posts/update/{{id}}" role="button" class="btn btn-secondary">수정</a>
+                <input type="hidden" id="id" value="{{post.id}}">
+                <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+            </div>
+        </div>
+    {{/post}}
+
+    {{^post}}
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Cannot find posts</h2>
+            </div>
+        </div>
+    {{/post}}
+
+</div>
+
+{{>layout/footer}}

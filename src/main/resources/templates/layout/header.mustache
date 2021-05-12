@@ -21,13 +21,26 @@
           font-size: 3.5rem;
         }
       }
+      body{
+        font-size: 15px;
+      }
       span[id=site-name] {
-        font-size: 24px;
+        font-size: 32px;
       }
       div[id=nav-bar]{
         margin: auto;
         text-align: center;
-        font-size: 16px;
+        font-size: 20px;
+      }
+
+      div[id=meta-info]{
+        font-size: 12px;
+      }
+      div[id=posts-info]{
+        background-color: darkseagreen;
+      }
+      div[id=posts]{
+        background-color: mediumseagreen;
       }
     </style>
 </head>
@@ -40,9 +53,9 @@
 
     <div class="col-md-12">
         <div class="container">
-            <header class="d-flex flex-wrap justify-content-between py-3 mb-4 border-bottom">
+            <header class="d-flex flex-wrap justify-content-between py-3 mb-2 border-bottom">
                 <a href="/" class="d-flex align-items-start mb-auto mb-md-auto me-md-auto text-dark text-decoration-none">
-                    <svg class="monkey" width="40" height="32"><use xlink:href="#monkey"></use></svg>
+                    <svg class="monkey" width="45" height="45"><use xlink:href="#monkey"></use></svg>
                     <span id="site-name">콘크리트 정글</span>
                 </a>
                 <hr class="d-md-none text-white-50">
@@ -64,7 +77,7 @@
 
         <article class="content-main">
             <div class="container">
-                <div class="row" id="nav-bar">
+                <div class="row border-bottom py-2 mb-4" id="nav-bar">
                     <div class="col-sm">
                         <a href="/notice">공지사항</a>
                     </div>
@@ -75,7 +88,7 @@
                         <a href="#">침팬지 관리</a>
                     </div>
                     <div class="col-sm">
-                        <a href="/board">잡담</a>
+                        <a href="/free">잡담</a>
                     </div>
                 </div>
                 <div class="row" id="nav-bar">
