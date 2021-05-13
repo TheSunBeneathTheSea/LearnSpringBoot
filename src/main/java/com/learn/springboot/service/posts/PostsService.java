@@ -50,6 +50,7 @@ public class PostsService {
 
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cannot find post id=" + id));
+        entity.increaseViewCount();
 
         return new PostsResponseDto(entity);
     }
