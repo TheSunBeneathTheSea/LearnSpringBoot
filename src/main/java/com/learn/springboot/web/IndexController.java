@@ -25,8 +25,17 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/register")
+    public String register(){
+
+        return "register";
+    }
+
     @GetMapping("/posts/save")
-    public String postsSave(){
+    public String postsSave(Model model, @LoginUser SessionUser user){
+        if(user != null){
+            model.addAttribute("loginUserName", user.getName());
+        }
         return "posts-save";
     }
 
@@ -40,6 +49,9 @@ public class IndexController {
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user){
+        if(user != null){
+            model.addAttribute("loginUserName", user.getName());
+        }
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
@@ -48,6 +60,9 @@ public class IndexController {
 
     @GetMapping("/notice")
     public String notice(Model model, @LoginUser SessionUser user){
+        if(user != null){
+            model.addAttribute("loginUserName", user.getName());
+        }
         model.addAttribute("posts", postsService.findBoardDesc("notice"));
         model.addAttribute("boardName", "notice");
 
@@ -56,6 +71,9 @@ public class IndexController {
 
     @GetMapping("/free")
     public String board(Model model, @LoginUser SessionUser user){
+        if(user != null){
+            model.addAttribute("loginUserName", user.getName());
+        }
         model.addAttribute("posts", postsService.findBoardDesc("free"));
         model.addAttribute("boardName", "free");
 

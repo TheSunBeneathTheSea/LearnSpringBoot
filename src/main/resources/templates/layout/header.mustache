@@ -15,6 +15,12 @@
         -moz-user-select: none;
         user-select: none;
       }
+      .center {
+        margin: auto;
+        width: 60%;
+        padding: 5px;
+        text-align: center;
+      }
 
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
@@ -60,13 +66,13 @@
                 </a>
                 <hr class="d-md-none text-white-50">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="/" class="nav-link active">Home</a></li>
                     {{#loginUserName}}
-                        <li class="nav-item"><a href="/members/id" class="btn btn-info active" role="button">마이페이지</a></li>
+                        <li class="nav-item"><a href="/members" class="btn btn-info active" role="button">마이페이지</a></li>
                         <li class="nav-item"><a href="/logout" class="btn btn-info active" role="button">Logout</a></li>
                     {{/loginUserName}}
                     {{^loginUserName}}
-                        <li class="nav-item"><a href="/members" class="btn btn-success active" role="button">회원가입</a></li>
+                        <li class="nav-item"><a href="/register" class="btn btn-success active">회원가입</a></li>
                     {{/loginUserName}}
                     <!-- 로그인 된 상태이면 로그인, 회원가입은 비노출 -->
                     <!-- <li class="nav-item"><a href="#" class="nav-link">로그아웃</a></li> 로그인 된 상태일 경우 로그아웃, 마이페이지 노출-->
