@@ -27,7 +27,7 @@ var main = {
             data: JSON.stringify(data)
         }).done(function(){
             alert('글이 등록되었습니다.');
-            window.location.href = 'javascript:history.back();';
+            window.location.href = '/' + boardName;
         }).fail(function (err){
             alert(JSON.stringify(err));
         });
@@ -48,13 +48,14 @@ var main = {
             data: JSON.stringify(data)
         }).done(function(){
             alert('글이 수정되었습니다.');
-            window.location.href = 'javascript:history.back();';
+            window.location.href = '/posts/view/' + id;
         }).fail(function (error){
             alert(JSON.stringify(error));
         });
     },
     delete : function(){
         var id = $('#id').val();
+        var boardName = $('#name').val();
 
         $.ajax({
             type: 'DELETE',
@@ -63,7 +64,7 @@ var main = {
             contentType:'application/json; charset=utf-8',
         }).done(function(){
             alert('글이 삭제되었습니다.');
-            window.location.href = 'javascript:history.back();';
+            window.location.href = '/' + boardName;
         }).fail(function(error) {
             alert(JSON.stringify(error));
         });
