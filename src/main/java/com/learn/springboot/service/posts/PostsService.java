@@ -48,9 +48,11 @@ public class PostsService {
         postsRepository.delete(posts);
     }
 
-    public PostsResponseDto findById(Long id) {
+    public PostsResponseDto findById(Long id, boolean alreadySeen) {
         Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cannot find post id=" + id));
-        entity.increaseViewCount();
+        if(!alreadySeen){
+            entity.increaseViewCount();
+        }
 
         return new PostsResponseDto(entity);
     }
