@@ -1,41 +1,68 @@
 import requests
 import csv
 from bs4 import BeautifulSoup
-from multiprocessing import Pool, Manager
+from multiprocessing import Pool
 import time
 import pandas as pd
 
-file = open('./data/kospi200.csv', 'r')
-reader = csv.reader(file)
 
+class Crawler:
+    def __init__(self, process_num):
+        self.result_list = []
+        self.company_list = []
+        self.pool = Pool(processes=process_num)
+        self.data = None
 
-def get_page(code):
-    url = 'https://www.google.com/finance/quote/' + code + ':KRX'
-    result = requests.get(url)
-    bs_obj = BeautifulSoup(result.content, "html.parser")
-    return bs_obj.find(class_="YMlKec fxKbKc").string.removesuffix('.00').replace(',', '')[1:]
+    def set_company_list(self, user_list=None):
+        if user_list is None:
+            file = open('./data/kospi200.csv', 'r', encoding='UTF8')
+            reader = csv.reader(file)
 
+            for line in reader:
+                self.company_list.append(line[0])
+        else:
+            self.company_list = user_list
 
-def get_price(company_code_list, result_list, index):
-    price = get_page(company_code_list[index])
-    result_list.append([company_code_list[index], price])
+    def job(self):
+        self.result_list = self.pool.map(self.get_price, range(1, len(self.company_list)))
+
+    def get_price(self, index):
+        price = self.get_page(self.company_list[index])
+        return [self.company_list[index], price]
+
+    def get_page(self, code):
+        # url = 'https://www.google.com/finance/quote/' + code + ':KRX'
+        url = 'https://finance.naver.com/item/main.nhn?code=' + code
+        result = requests.get(url)
+        bs_obj = BeautifulSoup(result.content, "lxml")
+        # return bs_obj.find(class_="YMlKec fxKbKc").string.removesuffix('.00').replace(',', '')[1:]
+        return bs_obj.select_one('p.no_today').text.strip().split()[0].replace(',', '')
+
+    def end_job(self):
+        self.pool.close()
+        self.pool.join()
+
+    def __getstate__(self):
+        self_dict = self.__dict__.copy()
+        del self_dict['pool']
+        return self_dict
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
 
 
 if __name__ == '__main__':
-    m = Manager()
-    company_code_list = result_list = []
-    result_list = m.list()
+    start = time.time()
 
-    # company_code_list = ['종목코드', '035420', '096770', '051900']
-    for line in reader:
-        company_code_list.append(line[0])
+    kospi200 = Crawler(4)
 
-    # start = time.time()
-    pool = Pool(processes=4)
+    # ["073240", "161890", "003240", "001800", "284740", "003850", "005440", "009420", "014820", "020000", "020560", "057050", "103140", "114090"]
+    kospi200.set_company_list()
+    kospi200.job()
+    kospi200.end_job()
 
-    pool.starmap(get_price, [(company_code_list, result_list, index) for index in range(1, len(company_code_list))])
+    df = pd.DataFrame(list(kospi200.result_list), columns=['company', 'price'])
+    print(df)
+    df.to_json('./data/price_now_{}.json'.format(time.strftime('%y-%m-%d-%H-%M-%S', time.localtime(time.time()))), orient='records')
 
-    df = pd.DataFrame(list(result_list), columns=['company', 'price'])
-    df.to_json('./data/price_now_{}.json'.format(time.localtime()), orient='records')
-
-    # print("timelap : ", time.time() - start)
+    print("timelapse : ", time.time() - start)
