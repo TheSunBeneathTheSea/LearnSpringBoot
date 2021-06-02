@@ -28,7 +28,6 @@ public class Posts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @JoinColumn(name="BOARDS_NAME")
     @Column(nullable = false)
     private String boardName;
 
