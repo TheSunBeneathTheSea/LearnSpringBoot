@@ -24,11 +24,11 @@ class Crawler:
             self.company_list = user_list
 
     def job(self):
-        self.result_list = self.pool.map(self.get_price, range(1, len(self.company_list)))
+        self.result_list = self.pool.map(self.get_info, range(1, len(self.company_list)))
 
-    def get_price(self, index):
-        price = self.get_page(self.company_list[index])
-        return [self.company_list[index], price]
+    def get_info(self, index):
+        info = self.get_page(self.company_list[index])
+        return [self.company_list[index], info[0], info[1]]
 
     def get_page(self, code):
         # url = 'https://www.google.com/finance/quote/' + code + ':KRX'
@@ -36,7 +36,13 @@ class Crawler:
         result = requests.get(url)
         bs_obj = BeautifulSoup(result.content, "lxml")
         # return bs_obj.find(class_="YMlKec fxKbKc").string.removesuffix('.00').replace(',', '')[1:]
-        return bs_obj.select_one('p.no_today').text.strip().split()[0].replace(',', '')
+        # return bs_obj.select_one('p.no_today').text.strip().split()[0].replace(',', '')
+        a = bs_obj.select_one('h4.h_sub.sub_tit7 > em > a')
+        if a is None:
+            return ['null',
+                    bs_obj.select_one('p.no_today').text.strip().split()[0].replace(',', '')]
+        return [a.text,
+                bs_obj.select_one('p.no_today').text.strip().split()[0].replace(',', '')]
 
     def end_job(self):
         self.pool.close()
@@ -56,13 +62,14 @@ if __name__ == '__main__':
 
     kospi200 = Crawler(4)
 
-    # ["073240", "161890", "003240", "001800", "284740", "003850", "005440", "009420", "014820", "020000", "020560", "057050", "103140", "114090"]
+    # ["073240", "161890", "003240", "001800", "005440", "009420", "014820", "020000", "020560"]
     kospi200.set_company_list()
     kospi200.job()
     kospi200.end_job()
 
-    df = pd.DataFrame(list(kospi200.result_list), columns=['company', 'price'])
+    df = pd.DataFrame(list(kospi200.result_list), columns=['company', 'industry', 'price'])
     print(df)
-    df.to_json('./data/price_now_{}.json'.format(time.strftime('%y-%m-%d-%H-%M-%S', time.localtime(time.time()))), orient='records')
+    df.to_json('./data/price_now_{}.json'.format(time.strftime('%y-%m-%d-%H-%M-%S', time.localtime(time.time()))),
+               orient='records', force_ascii=False)
 
     print("timelapse : ", time.time() - start)
