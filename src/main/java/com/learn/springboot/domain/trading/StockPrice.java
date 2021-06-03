@@ -12,9 +12,12 @@ import javax.persistence.*;
 @Entity
 public class StockPrice {
 
-    @OneToOne
-    @JoinColumn(name = "companyCode")
     @Id
+    private String companyCode;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    @MapsId
     private StockInfo stockInfo;
 
     // 종가
@@ -28,6 +31,7 @@ public class StockPrice {
 
     @Builder
     public StockPrice(StockInfo stockInfo, Long clsPrice, Long realTimePrice){
+        this.companyCode = stockInfo.getCompanyCode();
         this.stockInfo = stockInfo;
         this.clsPrice = clsPrice;
         this.realTimePrice = realTimePrice;
@@ -37,6 +41,5 @@ public class StockPrice {
         this.clsPrice = realTimePrice;
         this.realTimePrice = realTimePrice;
     }
-
 }
 

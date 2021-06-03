@@ -1,5 +1,6 @@
 package com.learn.springboot.domain.trading;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,7 @@ public class StockInfo {
     @Column
     private String industry;
 
+    @Builder
     public StockInfo(String companyCode, String companyName, String industry){
         this.companyCode = companyCode;
         this.companyName = companyName;

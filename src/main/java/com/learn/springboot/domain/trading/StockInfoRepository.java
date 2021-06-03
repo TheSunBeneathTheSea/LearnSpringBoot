@@ -8,8 +8,8 @@ import java.util.List;
 public interface StockInfoRepository extends JpaRepository<StockInfo, String> {
 
     @Query("SELECT p FROM StockInfo p ORDER BY p.companyCode DESC")
-    List<StockPrice> findAllDesc();
+    List<StockInfo> findAllDesc();
 
     @Query("SELECT p FROM StockInfo p where companyCode = ?1 ORDER BY p.companyName DESC")
-    List<HoldingStocks> findStockInfoByCodeDesc(String companyCode);
+    StockInfo findStockInfoByCodeDesc(String companyCode);
 }

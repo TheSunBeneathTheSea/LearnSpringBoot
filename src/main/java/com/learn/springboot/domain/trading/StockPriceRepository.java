@@ -10,6 +10,6 @@ public interface StockPriceRepository extends JpaRepository<StockPrice, String> 
     @Query("SELECT p FROM StockPrice p ORDER BY p.companyCode DESC")
     List<StockPrice> findAllDesc();
 
-    @Query("SELECT p FROM StockPrice p where companyCode = ?1 ORDER BY p.companyCode DESC")
-    List<HoldingStocks> findStockPriceByCodeDesc(String companyCode);
+    @Query("SELECT p FROM StockPrice p where companyCode = ?1 ORDER BY companyCode DESC")
+    StockPrice findStockPriceByCodeDesc(String companyCode);
 }

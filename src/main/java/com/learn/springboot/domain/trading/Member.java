@@ -16,9 +16,8 @@ public class Member {
     @Id
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
-    @Column
     private User user;
     
     @Column
@@ -34,4 +33,19 @@ public class Member {
         this.accountBalance = accountBalance;
     }
 
+    public boolean canAfford(Long moneyRequired){
+        if(moneyRequired > accountBalance){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public void buyingStock(Long payment){
+        this.accountBalance -= payment;
+    }
+
+    public void sellingStock(Long profit){
+        this.accountBalance += profit;
+    }
 }

@@ -5,22 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Getter
 @Entity
 @NoArgsConstructor
-@IdClass(HoldingStocksId.class)
 public class HoldingStocks {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "memberName")
+    @EmbeddedId
+    private HoldingStocksId id = new HoldingStocksId();
+
+    @MapsId("memberName")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Member member;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "companyCode")
+    @MapsId("companyCode")
+    @ManyToOne(cascade = CascadeType.ALL)
     private StockInfo stockInfo;
 
     @Column
@@ -32,15 +31,15 @@ public class HoldingStocks {
         this.stockInfo = stockInfo;
         this.shareAmount = shareAmount;
     }
-}
 
-@NoArgsConstructor
-class HoldingStocksId implements Serializable {
-    private String memberName;
-    private String companyCode;
+    public HoldingStocks buyingStocks(Long amount){
+        this.shareAmount += amount;
+        return this;
+    }
 
-    public HoldingStocksId(String memberName, String companyCode){
-        this.memberName = memberName;
-        this.companyCode = companyCode;
+    public HoldingStocks sellingStocks(Long amount){
+        this.shareAmount -= amount;
+        return this;
     }
 }
+
