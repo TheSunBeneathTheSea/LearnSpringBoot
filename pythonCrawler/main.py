@@ -19,7 +19,7 @@ class Crawler:
             reader = csv.reader(file)
 
             for line in reader:
-                self.company_list.append(line[0])
+                self.company_list.append([line[0], line[1]])
         else:
             self.company_list = user_list
 
@@ -27,8 +27,8 @@ class Crawler:
         self.result_list = self.pool.map(self.get_info, range(1, len(self.company_list)))
 
     def get_info(self, index):
-        info = self.get_page(self.company_list[index])
-        return [self.company_list[index], info[0], info[1]]
+        info = self.get_page(self.company_list[index][0])
+        return [self.company_list[index][0], self.company_list[index][1], info[0], info[1]]
 
     def get_page(self, code):
         # url = 'https://www.google.com/finance/quote/' + code + ':KRX'
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     kospi200.job()
     kospi200.end_job()
 
-    df = pd.DataFrame(list(kospi200.result_list), columns=['company', 'industry', 'price'])
+    df = pd.DataFrame(list(kospi200.result_list), columns=['companyCode', 'companyName', 'industry', 'price'])
     print(df)
     df.to_json('./data/price_now_{}.json'.format(time.strftime('%y-%m-%d-%H-%M-%S', time.localtime(time.time()))),
                orient='records', force_ascii=False)
