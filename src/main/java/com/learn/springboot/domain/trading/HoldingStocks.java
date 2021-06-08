@@ -41,5 +41,12 @@ public class HoldingStocks {
         this.shareAmount -= amount;
         return this;
     }
+
+    public boolean holdEnoughStock(Long amount){
+        if(this.shareAmount < amount){
+            return false;
+        }
+        return true;
+    }
 }
 

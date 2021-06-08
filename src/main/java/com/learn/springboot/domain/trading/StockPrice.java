@@ -30,16 +30,14 @@ public class StockPrice {
 
 
     @Builder
-    public StockPrice(StockInfo stockInfo, Long clsPrice, Long realTimePrice){
+    public StockPrice(StockInfo stockInfo, Long realTimePrice){
         this.companyCode = stockInfo.getCompanyCode();
         this.stockInfo = stockInfo;
-        this.clsPrice = clsPrice;
         this.realTimePrice = realTimePrice;
     }
 
-    public void closeMarket(Long realTimePrice){
-        this.clsPrice = realTimePrice;
-        this.realTimePrice = realTimePrice;
+    public void closeMarket(){
+        this.clsPrice = this.realTimePrice;
     }
 }
 

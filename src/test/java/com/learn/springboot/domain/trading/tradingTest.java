@@ -42,7 +42,7 @@ public class tradingTest {
         List<StockInfo> listsi = stockInfoRepository.findAllDesc();
 
         StockPrice stockPrice = StockPrice.builder()
-                .stockInfo(stockInfo).realTimePrice(5378L).clsPrice(4000L).build();
+                .stockInfo(stockInfo).realTimePrice(5378L).build();
         stockPriceRepository.save(stockPrice);
 
         List<StockPrice> listsp = stockPriceRepository.findAllDesc();
@@ -54,13 +54,13 @@ public class tradingTest {
                 .accountBalance(9000000L).name("TW").user(user).build();
         memberRepository.save(member);
 
-        HoldingStocks holdingStocks = HoldingStocks.builder()
-                .shareAmount(21L).member(member).stockInfo(stockInfo).build();
-        holdingStocksRepository.save(holdingStocks);
+//        HoldingStocks holdingStocks = HoldingStocks.builder()
+//                .shareAmount(21L).member(member).stockInfo(stockInfo).build();
+//        holdingStocksRepository.save(holdingStocks);
 
 
         // 매수 주문
-        tradingService.buyStock("021", 32L, "TW");
+        System.out.println(tradingService.buyStock("021", 32L, "TW"));
 
         List<HoldingStocks> holdingStocksList = holdingStocksRepository.findAll();
         HoldingStocks holdingStocks_to =  holdingStocksList.get(0);
@@ -73,7 +73,7 @@ public class tradingTest {
 
         assertThat(holdingStocks_to.getMember().getName()).isEqualTo("TW");
         assertThat(holdingStocks_to.getStockInfo().getCompanyCode()).isEqualTo("021");
-        assertThat(holdingStocks_to.getShareAmount()).isEqualTo(53L);
+        assertThat(holdingStocks_to.getShareAmount()).isEqualTo(32L);
 
         assertThat(testLog.isBuying()).isEqualTo(true);
         assertThat(testLog.getTradeAmount()).isEqualTo(32L);
@@ -83,5 +83,28 @@ public class tradingTest {
 
         assertThat(testMember.getName()).isEqualTo("TW");
         assertThat(testMember.getAccountBalance()).isEqualTo(8827904L);
+
+        //매도 테스트
+
+        System.out.println(tradingService.sellStock("021", 13L, "TW"));
+
+        holdingStocksList = holdingStocksRepository.findAll();
+        HoldingStocks holdingStocks_to2 =  holdingStocksList.get(0);
+
+        assertThat(holdingStocks_to2.getMember().getName()).isEqualTo("TW");
+        assertThat(holdingStocks_to2.getStockInfo().getCompanyCode()).isEqualTo("021");
+        assertThat(holdingStocks_to2.getShareAmount()).isEqualTo(19L);
+
+        tradingLog = tradingLogRepository.findAllDesc();
+        TradingLog testLog2= tradingLog.get(0);
+
+        assertThat(testLog2.isBuying()).isEqualTo(false);
+        assertThat(testLog2.getTradeAmount()).isEqualTo(13L);
+        assertThat(testLog2.getTradePrice()).isEqualTo(5378L);
+        assertThat(testLog2.getMember().getName()).isEqualTo("TW");
+        assertThat(testLog2.getStockInfo().getCompanyCode()).isEqualTo("021");
+
+        assertThat(testMember.getName()).isEqualTo("TW");
+        assertThat(testMember.getAccountBalance()).isEqualTo(8897818L);
     }
 }
