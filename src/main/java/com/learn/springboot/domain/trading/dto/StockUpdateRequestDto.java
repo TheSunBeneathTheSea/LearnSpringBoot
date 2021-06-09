@@ -2,8 +2,10 @@ package com.learn.springboot.domain.trading.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class StockUpdateRequestDto {
     private String companyCode;
     private String companyName;

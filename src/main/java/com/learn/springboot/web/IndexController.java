@@ -2,6 +2,7 @@ package com.learn.springboot.web;
 import com.learn.springboot.config.auth.LoginUser;
 import com.learn.springboot.config.auth.dto.SessionUser;
 import com.learn.springboot.service.posts.PostsService;
+import com.learn.springboot.service.trading.TradingService;
 import com.learn.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class IndexController {
 
     private final PostsService postsService;
+    private final TradingService tradingService;
     private final HttpSession httpSession;
 
     @GetMapping("/")
@@ -97,6 +99,13 @@ public class IndexController {
         model.addAttribute("boardName", "free");
 
         return "board";
+    }
+
+    @GetMapping("/trading")
+    public String trading(Model model, @LoginUser SessionUser user){
+        model.addAttribute("stocks", tradingService.findAllStockPrice());
+
+        return "trading";
     }
 
 }

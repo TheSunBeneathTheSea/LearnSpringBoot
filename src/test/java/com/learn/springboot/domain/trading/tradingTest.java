@@ -4,6 +4,7 @@ import com.learn.springboot.domain.user.Role;
 import com.learn.springboot.domain.user.User;
 import com.learn.springboot.domain.user.UserRepository;
 import com.learn.springboot.service.trading.TradingService;
+import com.learn.springboot.web.dto.StockTradeRequestDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,13 @@ public class tradingTest {
 
 
         // 매수 주문
-        System.out.println(tradingService.buyStock("021", 32L, "TW"));
+        StockTradeRequestDto stockTradeRequestDto = StockTradeRequestDto.builder()
+                .companyCode("021")
+                .amount(32L)
+                .name("TW")
+                .build();
+
+        System.out.println(tradingService.buyStock(stockTradeRequestDto));
 
         List<HoldingStocks> holdingStocksList = holdingStocksRepository.findAll();
         HoldingStocks holdingStocks_to =  holdingStocksList.get(0);
@@ -86,7 +93,13 @@ public class tradingTest {
 
         //매도 테스트
 
-        System.out.println(tradingService.sellStock("021", 13L, "TW"));
+        stockTradeRequestDto = StockTradeRequestDto.builder()
+                .companyCode("021")
+                .amount(13L)
+                .name("TW")
+                .build();
+
+        System.out.println(tradingService.sellStock(stockTradeRequestDto));
 
         holdingStocksList = holdingStocksRepository.findAll();
         HoldingStocks holdingStocks_to2 =  holdingStocksList.get(0);

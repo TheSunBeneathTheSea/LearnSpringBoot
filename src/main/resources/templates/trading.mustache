@@ -1,0 +1,25 @@
+{{>layout/header}}
+
+<div class="container">
+    <button type="button" class="btn btn-primary"><a href="/api/v1/trading/update">read json</a></button>
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong text-center">
+        <tr>
+            <th width="70">회사코드</th>
+            <th width="150">회사이름</th>
+            <th width="150">현재가</th>
+        </tr>
+        </thead>
+        <tbody id="tbody" class="text-center">
+        {{#stocks}}
+            <tr>
+                <td>{{companyCode}}</td>
+                <td>{{stockInfo.companyName}}</td>
+                <td>{{realTimePrice}}</td>
+            </tr>
+        {{/stocks}}
+        </tbody>
+    </table>
+</div>
+
+{{>layout/footer}}
