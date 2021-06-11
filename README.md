@@ -9,4 +9,4 @@ kospi 200 구성 종목들의 현재가를 1분 단위로 크롤링하여
 
 ## tech
 * 크롤러 : Python 3.9.5, beautifulSoup4 4.9.3, pandas 1.2.4, lxml 4.6.3
-* 웹 서비스 : SpringBoot 2.4.1, lombok, mariaDB, mustache, json
+* 웹 서비스 : SpringBoot 2.4.1, gradle 6.7.1, lombok, mariaDB, mustache, json
