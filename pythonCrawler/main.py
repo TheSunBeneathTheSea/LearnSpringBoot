@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
     df = pd.DataFrame(list(kospi200.result_list), columns=['companyCode', 'companyName', 'industry', 'price'])
     print(df)
-    df.to_json('../src/main/resources/static/data/price_now.json',
+    df.to_json('../src/main/resources/data/price_now.json',
                orient='records', force_ascii=False)
 
     print("timelapse : ", time.time() - start)

@@ -154,12 +154,13 @@ public class TradingService {
     }
 
     @Transactional
-    public void closeMarket(){
+    public String closeMarket(){
         List<StockPrice> stockPriceList = stockPriceRepository.findAllDesc();
 
         for (StockPrice stockPrice: stockPriceList) {
             stockPrice.closeMarket();
         }
+        return "Market has closed";
     }
 
     public List<StockPrice> findAllStockPrice(){

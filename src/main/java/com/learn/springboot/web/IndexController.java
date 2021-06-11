@@ -103,6 +103,9 @@ public class IndexController {
 
     @GetMapping("/trading")
     public String trading(Model model, @LoginUser SessionUser user){
+        if(user != null){
+            model.addAttribute("loginUserName", user.getName());
+        }
         model.addAttribute("stocks", tradingService.findAllStockPrice());
 
         return "trading";
