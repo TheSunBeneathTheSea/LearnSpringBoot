@@ -1,5 +1,7 @@
 package com.learn.springboot.domain.trading;
 
+import com.learn.springboot.domain.member.Member;
+import com.learn.springboot.domain.member.MemberRepository;
 import com.learn.springboot.domain.user.Role;
 import com.learn.springboot.domain.user.User;
 import com.learn.springboot.domain.user.UserRepository;
@@ -13,6 +15,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -52,7 +58,8 @@ public class tradingTest {
                 .name("CHOI").picture("wow").email("dev@wow.com").role(Role.USER).build();
 
         Member member = Member.builder()
-                .accountBalance(9000000L).name("TW").user(user).build();
+                .name("TW").user(user).build();
+        member.setAccountBalance(9000000L);
         memberRepository.save(member);
 
 //        HoldingStocks holdingStocks = HoldingStocks.builder()

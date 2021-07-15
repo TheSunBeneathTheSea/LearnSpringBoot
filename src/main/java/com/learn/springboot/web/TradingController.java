@@ -37,8 +37,8 @@ public class TradingController {
     }
 
     @Schedules({
-            @Scheduled(cron = "0 0/5 9-14 ? * 2-6"),
-            @Scheduled(cron = "0 0-25/5 15 ? * 2-6")
+            @Scheduled(cron = "0 1/5 9-14 ? * 2-6"),
+            @Scheduled(cron = "0 1-26/5 15 ? * 2-6")
     })
     public String updateStock() {
         String updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 M월 dd일 HH:mm"));
@@ -74,4 +74,12 @@ public class TradingController {
     public String closeMarket(){
         return tradingService.closeMarket();
     }
+
+//    @Schedules({
+//            @Scheduled(cron = "0 2/5 9-14 ? * 2-6"),
+//            @Scheduled(cron = "0 2-27/5 15 ? * 2-6")
+//    })
+//    public String trading(){
+//
+//    }
 }

@@ -1,5 +1,7 @@
 package com.learn.springboot.service.trading;
 
+import com.learn.springboot.domain.member.Member;
+import com.learn.springboot.domain.member.MemberRepository;
 import com.learn.springboot.domain.trading.*;
 import com.learn.springboot.domain.trading.dto.StockUpdateRequestDto;
 import com.learn.springboot.web.dto.StockTradeRequestDto;

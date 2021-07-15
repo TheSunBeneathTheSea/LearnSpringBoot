@@ -1,23 +1,27 @@
-package com.learn.springboot.web.dto;
+package com.learn.springboot.web.dto.posts;
+
 import com.learn.springboot.domain.posts.Posts;
 import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 @Getter
-public class PostsListResponseDto {
-    private String boardName;
+public class PostsResponseDto {
     private Long id;
+    private String boardName;
     private Long no;
     private String title;
+    private String content;
     private String author;
     private Long viewCount;
     private LocalDateTime modifiedDate;
 
-    public PostsListResponseDto(Posts entity) {
-        this.boardName = entity.getBoardName();
+    public PostsResponseDto(Posts entity) {
         this.id = entity.getId();
+        this.boardName = entity.getBoardName();
         this.no = entity.getNo();
         this.title = entity.getTitle();
+        this.content = entity.getContent();
         this.author = entity.getAuthor();
         this.viewCount = entity.getViewCount();
         this.modifiedDate = entity.getModifiedDate();

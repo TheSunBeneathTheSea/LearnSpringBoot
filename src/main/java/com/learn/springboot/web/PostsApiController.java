@@ -1,9 +1,9 @@
 package com.learn.springboot.web;
 
 import com.learn.springboot.service.posts.PostsService;
-import com.learn.springboot.web.dto.PostsResponseDto;
-import com.learn.springboot.web.dto.PostsSaveRequestDto;
-import com.learn.springboot.web.dto.PostsUpdateRequestDto;
+import com.learn.springboot.web.dto.posts.PostsResponseDto;
+import com.learn.springboot.web.dto.posts.PostsSaveRequestDto;
+import com.learn.springboot.web.dto.posts.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

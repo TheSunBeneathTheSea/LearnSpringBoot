@@ -1,5 +1,6 @@
 package com.learn.springboot.domain.trading;
 
+import com.learn.springboot.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,6 @@
-package com.learn.springboot.domain.trading;
+package com.learn.springboot.domain.member;
 
+import com.learn.springboot.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
