@@ -6,11 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface MemberRepository extends JpaRepository<Member, String> {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT p FROM Member p ORDER BY p.name DESC")
     List<Member> findAllDesc();
 
     @Query("SELECT p FROM Member p where name = ?1 ORDER BY p.name DESC")
     Member findMemberByNameDesc(String name);
+
+    @Query("SELECT p FROM Member p where user_id = ?1 ORDER BY p.name DESC")
+    Member findMemberByUserId(Long id);
 }

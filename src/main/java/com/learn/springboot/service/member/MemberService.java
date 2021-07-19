@@ -22,8 +22,9 @@ public class MemberService {
         return "저장되었습니다";
     }
 
+    @Transactional(readOnly = true)
     public boolean isNotRegisteredUser(Long id){
-        return memberRepository.findMemberByUserId(id).equals(null);
+        return memberRepository.findMemberByUserId(id) == null;
     }
 
     public Member findMemberByUserId(Long id){

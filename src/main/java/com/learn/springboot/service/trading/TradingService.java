@@ -3,12 +3,14 @@ package com.learn.springboot.service.trading;
 import com.learn.springboot.domain.member.Member;
 import com.learn.springboot.domain.member.MemberRepository;
 import com.learn.springboot.domain.trading.*;
+import com.learn.springboot.domain.trading.dto.CompanyCodeAndNameDto;
 import com.learn.springboot.domain.trading.dto.StockUpdateRequestDto;
 import com.learn.springboot.web.dto.StockTradeRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -167,5 +169,14 @@ public class TradingService {
 
     public List<StockPrice> findAllStockPrice(){
         return stockPriceRepository.findAllAsc();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CompanyCodeAndNameDto> findAllCompanyCodeAndName(){
+        List<CompanyCodeAndNameDto> companyCodeAndName = new ArrayList<>();
+
+        companyCodeAndName = stockInfoRepository.findAllCompanyCodeAndName();
+
+        return companyCodeAndName;
     }
 }

@@ -1,20 +1,17 @@
 package com.learn.springboot.web;
 import com.learn.springboot.config.auth.LoginUser;
 import com.learn.springboot.config.auth.dto.SessionUser;
+import com.learn.springboot.service.member.MemberService;
 import com.learn.springboot.service.posts.PostsService;
 import com.learn.springboot.service.trading.TradingService;
-import com.learn.springboot.web.dto.PostsResponseDto;
+import com.learn.springboot.web.dto.posts.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
@@ -25,6 +22,7 @@ public class IndexController {
     private final PostsService postsService;
     private final TradingService tradingService;
     private final HttpSession httpSession;
+    private final MemberService memberService;
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
@@ -109,6 +107,30 @@ public class IndexController {
         model.addAttribute("stocks", tradingService.findAllStockPrice());
 
         return "trading";
+    }
+
+    @GetMapping("/member")
+    public String member(Model model, @LoginUser SessionUser user){
+        if(user != null){
+            model.addAttribute("loginUserName", user.getName());
+            if(memberService.isNotRegisteredUser(user.getId())){
+                model.addAttribute("member", memberService.findMemberByUserId(user.getId()));
+                model.addAttribute("companyCodeAndName", tradingService.findAllCompanyCodeAndName());
+            }
+        }
+
+
+        return "member";
+    }
+
+    @GetMapping("/member/create")
+    public String setting(Model model, @LoginUser SessionUser user){
+        if(user != null){
+            model.addAttribute("loginUserName", user.getName());
+        }
+
+
+        return "member-create";
     }
 
 }
